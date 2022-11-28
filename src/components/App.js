@@ -1,45 +1,59 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/App.css';
 
-const Loader = () => <div id="loader">Loading...</div>
+const Loader = () =>{ return <div id="loader">Loading...</div> }
+
+const LoadingStatus = {
+  NOT_STARTED: "NOT_STARTED",
+  IN_PROGRESS: "IN_PROGRESS",
+  SUCCESS: "SUCCESS",
+};
 
 
 const App = () => {
   const [data,setData] = useState([])
   const [type,setType] = useState("education");
-  const [load, setLoad] = useState("")
+  const [isLoading, setIsLoading] = React.useState(LoadingStatus.NOT_STARTED);
 
   
   const getData = async () => {
-    fetch(
-      `http://www.boredapi.com/api/activity?type=${type}`
-    )
-      .then((results) => results.json())
-      .then((datAagain) => setData(datAagain)); 
+    // fetch(
+    //   `http://www.boredapi.com/api/activity?type=${type}`
+    // )
+
+    // .then((results) => results.json(), console.log(isLoading))
+    // .then((datAagain) => setData(datAagain), setIsLoading(LoadingStatus.SUCCESS), console.log(isLoading)); 
+
+    const response = await fetch(`http://www.boredapi.com/api/activity?type=${type}`);
+    const json = await response.json();
+    setData(json);
+    setIsLoading(LoadingStatus.SUCCESS)
+
   };
 
 
   useEffect(() => {
+    setIsLoading(LoadingStatus.IN_PROGRESS)
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function education() {
-    setLoad(data)
+    setIsLoading(LoadingStatus.IN_PROGRESS)
     setType("education")
     getData();
-  }
-  
+      }
+
   function recreational() {
-    setLoad(data)
+    setIsLoading(LoadingStatus.IN_PROGRESS)
     setType("recreational")
     getData();
   }
 
-
   return (
     <div id="main">
-    <div id="activity">{data==load ? <Loader/> : data.activity}</div>
+    { isLoading=="IN_PROGRESS" && <Loader/> }
+    {isLoading=="SUCCESS" && <div id="activity">{data.activity}</div>}
 
 
     <button id="btn-education" onClick={education}>Education</button>
