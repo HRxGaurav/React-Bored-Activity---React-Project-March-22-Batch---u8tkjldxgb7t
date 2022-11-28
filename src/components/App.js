@@ -10,10 +10,10 @@ const App = () => {
 
   const getData = async () => {
     setIsLoading(false);
+    
+    const makeURL = (type) => `http://www.boredapi.com/api/activity?type=${type}`
 
-    const response = await fetch(
-      `http://www.boredapi.com/api/activity?type=${type}`
-    );
+    const response = await fetch(makeURL(type));
     const json = await response.json();
     setData(json);
     setIsLoading(true);
@@ -24,7 +24,7 @@ const App = () => {
   }, []);
 
   function education() {
-    setType("education");
+    setType("education");    
     getData();
   }
 
