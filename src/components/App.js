@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/App.css';
 
-const Loader = () =>{ return <div id="loader">Loading...</div> }
+const Loader = () =><div id="loader">Loading...</div> 
 
 const LoadingStatus = {
   NOT_STARTED: "NOT_STARTED",
