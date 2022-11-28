@@ -13,7 +13,7 @@ const LoadingStatus = {
 const App = () => {
   const [data,setData] = useState([])
   const [type,setType] = useState("education");
-  const [isLoading, setIsLoading] = React.useState(LoadingStatus.NOT_STARTED);
+  const [isLoading, setIsLoading] = React.useState(LoadingStatus.IN_PROGRESS);
 
   
   const getData = async () => {
